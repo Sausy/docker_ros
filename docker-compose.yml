@@ -1,7 +1,7 @@
 version: '3'
 services:
   roscore_build:
-    image: "sausy/roscore:${ARCHITECTUR}_${ROSVERSION}"
+    image: "${DOCKHUB_USER}/roscore:${ARCHITECTUR}_${ROSVERSION}"
     build:
       context: .
       args:
@@ -9,7 +9,7 @@ services:
         PLATFORM: ${ARCHITECTUR}
       dockerfile: Dockerfile-roscore
   roscore:
-    image: "sausy/roscore:${ARCHITECTUR}_${ROSVERSION}"
+    image: "${DOCKHUB_USER}/roscore:${ARCHITECTUR}_${ROSVERSION}"
     container_name: roscore
     hostname: roscore
     network_mode: "host"

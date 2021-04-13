@@ -32,7 +32,7 @@ if [[ ! $REPLY =~ ^[Nn]$ ]]
   echo "[ERROR] THIS COINTAINER DOESN'T EXIST"
   echo "[INFO] Container will be rebuilt"
   #else
-  #docker tag $DOCKER_HUB_NAME roscore/${ARCHITECTUR}:${ROSVERSION}
+  #docker tag $DOCKER_HUB_NAME $DOCKER_IMAGE
  fi
 else
  fallBack=1
@@ -41,9 +41,9 @@ fi
 if [[ fallBack -eq 1 ]]
 then
  docker stop $PROJECT_NAME
- docker rmi -f $DOCKHUB_USER/$PROJECT_NAME
+ #docker rmi -f $DOCKHUB_USER/$PROJECT_NAME
+ docker rmi -f $DOCKER_HUB_NAME
  docker-compose build --force-rm "${PROJECT_NAME}_build"
-
 
  #==== push the clean image to docker hub====
  read -p "Push new container to dockerHub [Y/n]" -n 1 -r
