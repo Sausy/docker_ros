@@ -27,7 +27,7 @@ RUN mkdir /data && \
     pip install twisted bson cffi && \
     pip install tornado pyOpenSSL && \
     pip install pymongo && \
-    pip install autobahn
+    pip install autobahn && \
     /bin/bash -c "source /opt/ros/${CHOOSE_ROS_DISTRO}/setup.bash; sudo rosdep init; rosdep update; " && \
     /bin/bash -c "source /opt/ros/${CHOOSE_ROS_DISTRO}/setup.bash; rosdep install -y rosbridge_server; "
 
