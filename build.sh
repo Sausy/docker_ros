@@ -18,6 +18,8 @@ echo "TIP: to change these vars"
 echo "edit the '.env' file"
 echo "======================="
 
+PROJECT_NAME=roscore
+
 postFix="${ARCHITECTUR}_${ROSVERSION}"
 DOCKER_HUB_NAME="${DOCKHUB_USER}/${PROJECT_NAME}:${postFix}"
 
@@ -49,6 +51,17 @@ then
  read -p "Push new container to dockerHub [Y/n]" -n 1 -r
  if [[ ! $REPLY =~ ^[Nn]$ ]]
  then
+  #./pushToHub.sh
+  #docker run -it --name rdyToPush sausy/roscore:arm64_melodic uname -a
+  #docker kill rdyToPush
+  #docker rm rdyToPush
+  #CONTAINER_ID=$(docker ps -f status=exited -f name=rdyToPush | awk 'NR == 2' | awk '{print $1}')
+  #NEW_ID=$(docker commit $CONTAINER_ID | awk -F"x" '{print $2}')
+  #docker save NEW_ID > foo.tar
+  #docker-squash -i foo.tar -o squashed.tar
+  #cat squashed.tar | docker load
+  #docker images sausy/roscore:arm64_melodic
+  #rm foo.tar
   docker push $DOCKER_HUB_NAME
  fi
 fi
