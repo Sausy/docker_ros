@@ -5,23 +5,25 @@ FROM --platform=linux/$PLATFORM ros:$ROS_DIST-ros-core
 
 ARG ROS_DIST
 
-RUN mkdir /src && \
-    echo "" > /src/ros-entery.sh && \
-    chmod +x /src/ros-entery.sh
-
-COPY ./ros-entery.sh /src/ros-entery.sh
+COPY ./ros-entry.sh /ros-entry.sh
+CMD bash -C '/ros-entry.sh';'bash'
 
 RUN mkdir /data && \
     apt-get update && \
     export CHOOSE_ROS_DISTRO=${ROS_DIST} && \
     apt-get install -y \
     ros-${CHOOSE_ROS_DISTRO}-rosbridge-server \
-    ros-${CHOOSE_ROS_DISTRO}-tf2-web-republisher \
-    python-cffi python-bson python-twisted \
-    python-rosdep python-rosinstall python-rosinstall-generator python-wstool \
-    python-pip \
-    libssl-dev libffi-dev \
-    python-autobahn && \ 
+    ros-${CHOOSE_ROS_DISTRO}-tf2-web-republisher && \
+    apt-get install -y libssl-dev || echo "ERROR" &&  \
+    apt-get install -y libffi-dev || echo "ERROR" &&  \
+    apt-get install -y python-cffi python-bson python-twisted || echo "[ERROR] py2 not available" && \
+    apt-get install -y python-rosdep python-rosinstall python-rosinstall-generator python-wstool || echo "[ERROR] py2 not available" && \
+    apt-get install -y python-pip || echo "[ERROR] py2 not available" && \ 
+    apt-get install -y python-autobahn || echo "[ERROR] py2 not available" && \ 
+    apt-get install -y python3-cffi python3-bson python3-twisted || echo "[ERROR] py3 not available" && \
+    apt-get install -y python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool || echo "[ERROR] py3 not available" && \
+    apt-get install -y python3-pip || echo "[ERROR] py3 not available" && \
+    apt-get install -y python3-autobahn || echo "[ERROR] py3 not available" && \
     #python-dev && \
     #---- It is important to install bson befor pymongo
     pip install twisted bson cffi && \
@@ -35,4 +37,4 @@ RUN mkdir /data && \
 #EXPOSE 9090
 
 #CMD [ "/bin/bash", "-c", "'source /opt/ros/${CHOOSE_ROS_DISTRO}/setup.bash; /src/ros-entery.sh;'" ]
-CMD bash -C '/src/ros-entery.sh';'bash'
+#CMD bash -C '/ros-entry.sh';'bash'

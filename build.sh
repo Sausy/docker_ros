@@ -23,12 +23,15 @@ PROJECT_NAME=roscore
 postFix="${ARCHITECTUR}_${ROSVERSION}"
 DOCKER_HUB_NAME="${DOCKHUB_USER}/${PROJECT_NAME}:${postFix}"
 
+docker kill $PROJECT_NAME
+sleep 5
+
 echo "==========[ROSCORE]============="
 fallBack=0
 read -p "Use prebuild container [Y/n]" -n 1 -r
 if [[ ! $REPLY =~ ^[Nn]$ ]]
  then
-
+ docker rmi -f $DOCKER_HUB_NAME
  docker pull $DOCKER_HUB_NAME || fallBack=1
  if [[ $fallBack -eq 1 ]]; then
   echo "[ERROR] THIS COINTAINER DOESN'T EXIST"
