@@ -15,18 +15,4 @@ services:
     network_mode: "host"
     environment:
       - ROS_MASTER_URI=http://localhost:11311
-  webrviz_build:
-    image: "${DOCKHUB_USER}/webrviz:${ARCHITECTUR}_${ROSVERSION}"
-    build:
-      context: .
-      args:
-        ROS_DIST: ${ROSVERSION}
-        PLATFORM: ${ARCHITECTUR}
-      dockerfile: Dockerfile-webrviz
-  webrviz:
-    image: "${DOCKHUB_USER}/webrviz:${ARCHITECTUR}_${ROSVERSION}"
-    container_name: webrviz
-    hostname: webrviz
-    network_mode: "host"
-    environment:
-      - ROS_MASTER_URI=http://localhost:11311
+      - ROSVERSION=${ROSVERSION}
