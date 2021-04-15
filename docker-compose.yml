@@ -15,3 +15,4 @@ services:
     network_mode: "host"
     environment:
       - ROS_MASTER_URI=http://localhost:11311
+      - ROSVERSION=${ROSVERSION}
